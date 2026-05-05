@@ -1,0 +1,50 @@
+body{
+    background-color: #34495F;
+}
+h1{
+    color: #CBC9CE;
+    text-align: center;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+h2{
+    color: #CBC9CE;
+    padding-left: 20%;
+    padding-top: 1%;
+    font-size: 2rem;
+}
+#username_bar{
+    width: 50%;
+    height: 20%;
+    margin-left: 20%;
+    margin-bottom: 10%;
+    
+}
+#nav_links{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+}
+#nav_link_login{
+    justify-content: center;
+    
+    color: #CBC9CE;
+    font-size: 2.5rem;
+}
+#nav_link_register{
+    justify-content: center;
+    
+    color: #CBC9CE;
+    font-size: 1.85rem;
+}
+#nav_link_account{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #CBC9CE;
+    font-size: 2.5rem;
+    
+}
