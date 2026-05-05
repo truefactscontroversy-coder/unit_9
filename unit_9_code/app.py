@@ -15,7 +15,7 @@ ma = Marshmallow(app)
 
 class weather_data(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    area = db.Column(db.String(100), unique=True)
+    area = db.Column(db.String(100))
     date = db.Column(db.String(100))
     am1 = db.Column(db.Float)
     am2 = db.Column(db.Float)
@@ -32,18 +32,26 @@ class weather_data(db.Model):
 
 
 class weather_dataSchema(ma.Schema):
+    class Meta:
+        ordered = True
     area = fields.Str()
     date = fields.Str()
     am1 = fields.Float()
     am2 = fields.Float()   
     pm1 = fields.Float()
     pm2 = fields.Float()
+    
 
 
 
 weather_data_schema = weather_dataSchema()
 weather_data_schemas = weather_dataSchema(many=True)
 
+@app.route('/get_all_weather_data', methods=['GET'])
+def get_weather_data():
+    all_weather_data = weather_data.query.all()
+    result = weather_data_schemas.dump(all_weather_data)
+    return jsonify(result)
 
 
 
