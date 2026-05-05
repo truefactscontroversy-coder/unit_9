@@ -17,27 +17,27 @@ class weather_data(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     area = db.Column(db.String(100), unique=True)
     date = db.Column(db.String(100))
-    am_1read = db.Column(db.Float)
-    am_2read = db.Column(db.Float)
-    pm_1read = db.Column(db.Float)
-    pm_2read = db.Column(db.Float)
+    am1 = db.Column(db.Float)
+    am2 = db.Column(db.Float)
+    pm1 = db.Column(db.Float)
+    pm2 = db.Column(db.Float)
 
-    def __init__(self, area, date, am_1read, am_2read, pm_1read, pm_2read):
+    def __init__(self, area, date, am1, am2, pm1, pm2):
         self.area = area 
         self.date = date
-        self.am_1read = am_1read
-        self.am_2read = am_2read
-        self.pm_1read = pm_1read
-        self.pm_2read = pm_2read
+        self.am1 = am1
+        self.am2 = am2
+        self.pm1 = pm1
+        self.pm2 = pm2
 
 
 class weather_dataSchema(ma.Schema):
     area = fields.Str()
     date = fields.Str()
-    am_1read = fields.Float()
-    am_2read = fields.Float()   
-    pm_1read = fields.Float()
-    pm_2read = fields.Float()
+    am1 = fields.Float()
+    am2 = fields.Float()   
+    pm1 = fields.Float()
+    pm2 = fields.Float()
 
 
 
