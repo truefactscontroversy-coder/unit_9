@@ -1,7 +1,7 @@
 body{
     margin: 0;
     padding: 0;
-    background-image: url(/static/weather_in_field.jpg);
+    background-image: url('weather_in_field.jpg');
     background-position: center;
 }
 #title{
@@ -44,10 +44,9 @@ p{
     background-color: #34495F;
     color: white;
     font-size: 2rem;
-    border-color: white;
     border-width: 4px;
     margin: 1% 1% 5% 1%;
-    
+    border-color: white;
     
 }
 .continue_button:hover{
@@ -57,7 +56,6 @@ p{
     background-color: #34495F;
     color: white;
     font-size: 2rem;
-   
     border-color: white;
     border-width: 4px;
     margin: 1% 1% 1% 1%;

@@ -3,16 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/account_page.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='account_page.css') }}">
     <title>Document</title>
 </head>
 <body>
-    <h1>Your API key</h1>
-    <div id="content_container">
-        <h2 id="api_key">API Key</h2>
-        <button id="copy_button" onclick="copyApiKey()">Copy</button>
+    <div id="nav_title">
+        <a href="{{ url_for('index') }}">Back to Home</a>
+        <h1>Your API key</h1>
     </div>
-    <div id="text_container">
+        <div id="content_container">
+            <h2 id="api_key">{{ api_key }}</h2>
+            <button id="copy_button" onclick="copyApiKey()">Copy</button>
+        </div>
+        <div id="text_container">
         <p id="locations">
             Possible locations to query: 
             <br/>
@@ -64,6 +67,6 @@
             Rainfall for all days, for all locations.
         </p>
     </div>
-<script src="/static/java_account_page.js"></script>
+<script src="{{ url_for('static', filename='java_account_page.js') }}"></script>
 </body>
 </html>

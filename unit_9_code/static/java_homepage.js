@@ -4,9 +4,9 @@ const register_btn = document.getElementById("register_button");
 
 
 login_btn.addEventListener("click", () => {
-    window.location.href = "/templates/login.html";
+    window.location.href = "login.html";
 });
 
 register_btn.addEventListener("click", () => {
-    window.location.href = "/templates/register.html";
+    window.location.href = "register.html";
 });

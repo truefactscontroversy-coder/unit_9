@@ -25,3 +25,5 @@ def import_csv_to_db(file_path):
         
 
 import_csv_to_db('C:\\Users\\ajlxs\\OneDrive\\Documents\\Unit_9\\unit_9\\unit_9_code\\9_weather_data(Sheet1).csv')
+
+

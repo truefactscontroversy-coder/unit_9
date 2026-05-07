@@ -1,6 +1,11 @@
 const users_key = document.getElementById('api_key');
 const copyButton = document.getElementById('copy_button');
 
+document.addEventListener("DOMContentLoaded", function () {
+            console.log("DOM ready!");
+
+});
+
 copyButton.addEventListener("click", function() {;
     if (navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(users_key.textContent)

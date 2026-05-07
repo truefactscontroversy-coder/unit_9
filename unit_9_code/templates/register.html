@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/login_register.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='login_register.css') }}">
     <title>Document</title>
 </head>
 <body>
     <h1>Register with the CEA</h1>
-        <h2>username</h2>
-            <input type="text" id="username_bar" name="username">
-    <br/>
-    <a href="account_page.html" id="nav_link_account">Register</a>
-    
+    <form id="form_data_register">
+        <h2 id="username_text_register">username</h2>
+        <input type="text" id="username_bar_register" name="username">
+        <br/>
+        <button type="submit" class="look_like_text" id="nav_link_account">Register</button>
+    </form>
+    <script src="{{ url_for('static', filename='java_for_login_register.js') }}"></script>
 </body>
 </html>

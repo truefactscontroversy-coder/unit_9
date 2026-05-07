@@ -9,11 +9,22 @@ h1{
 }
 h2{
     color: #CBC9CE;
-    padding-left: 20%;
-    padding-top: 1%;
+    margin-left: 18%;
+    padding: 1% 2% 1% 2%;
     font-size: 2rem;
+    
+    width: fit-content;
+    
+    
 }
-#username_bar{
+#username_bar_login{
+    width: 50%;
+    height: 20%;
+    margin-left: 20%;
+    margin-bottom: 10%;
+    
+}
+#username_bar_register{
     width: 50%;
     height: 20%;
     margin-left: 20%;
@@ -29,15 +40,26 @@ h2{
 }
 #nav_link_login{
     justify-content: center;
-    
     color: #CBC9CE;
     font-size: 2.5rem;
+    
 }
 #nav_link_register{
     justify-content: center;
-    
     color: #CBC9CE;
     font-size: 1.85rem;
+
+}
+.look_like_text{
+    background-color: transparent;
+    border: none;
+    box-shadow: none;          /* Resets all styles */
+    outline: none;
+    all: unset;
+}
+.look_like_text:hover{
+    text-decoration: underline;
+    cursor: pointer;
 }
 #nav_link_account{
     position: absolute;
