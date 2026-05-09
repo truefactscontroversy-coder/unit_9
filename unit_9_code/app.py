@@ -81,61 +81,66 @@ admin_key_schemas = admin_keySchema(many=True)
 
 
 
-@app.route('/get_all_weather_data', methods=['GET'])
-def get_weather_data():
-    all_weather_data = weather_data.query.all()
-    result = weather_data_schemas.dump(all_weather_data)
-    return jsonify(result)
-
-@app.route('/get_all_one_location/', methods=['GET'])
-def get_all_one_location():
-    area = request.args.get('area')
-    location_data = weather_data.query.filter_by(area=area).all()
-    result = weather_data_schemas.dump(location_data)
-    return jsonify(result)
-
-    
-@app.route('/get_all_one_date/', methods=['GET'])
-def get_all_one_date():
-    date = request.args.get('date')
-    date_data = weather_data.query.filter_by(date=date).all()
-    result = weather_data_schemas.dump(date_data)
-    return jsonify(result)
-
-@app.route('/get_one_day_data/', methods=['GET'])
-def get_one_day_data():
-    date = request.args.get('date')
-    area = request.args.get('area')
-    day_data = weather_data.query.filter_by(date=date, area=area).first()
-    result = weather_data_schema.dump(day_data)
-    return jsonify(result)
-
-@app.errorhandler(404)
-def non_existent():
-    return jsonify({"error": "the record you tried to query does not exist"})
-
-
 
 def check_auth(func):
     def wrapper(*args,**kwargs):
         api_key = request.headers.get("x-api-key")
         if not api_key:
             return jsonify({"error": "API key missing"}), 401
+        api_keys = db.session.query(user_info.api_key).all()
+
+        if not any(api_key in key_list for key_list in api_keys):
+            return jsonify({"error": "invalid key, please enter a new key or go to the CEA website to get one"})
+
+
         return func(*args, **kwargs)
     
 
-    
     wrapper.__name__ = func.__name__  
     return wrapper
 
 
 
-@app.route('/test', methods=['GET'])
+@app.route('/Get_weather_data/', methods=['GET'])
 @check_auth
-def test():
-    all_weather_data = weather_data.query.all()
-    result = weather_data_schemas.dump(all_weather_data)
-    return jsonify(result)
+def Get_weather_data():
+    date = request.args.get('date')
+    area = request.args.get('area') 
+
+    if (date and area):
+        day_data = weather_data.query.filter_by(date=date, area=area).first()
+        result = weather_data_schema.dump(day_data)
+        if not result:
+            return jsonify({"error": "the record you tried to query does not exist"})
+        else:
+            return jsonify(result)
+    elif (date):
+        date_data = weather_data.query.filter_by(date=date).all()
+        result = weather_data_schemas.dump(date_data)
+        if not result:
+            return jsonify({"error": "the record you tried to query does not exist"})
+        else:
+            return jsonify(result)
+    elif (area):
+        location_data = weather_data.query.filter_by(area=area).all()
+        result = weather_data_schemas.dump(location_data)
+        if not result:
+            return jsonify({"error": "the record you tried to query does not exist"})
+        else:
+            return jsonify(result)
+    else:
+        all_weather_data = weather_data.query.all()
+        result = weather_data_schemas.dump(all_weather_data)
+        if not result:
+            return jsonify({"error": "the record you tried to query does not exist"})
+        else:
+            return jsonify(result)
+    
+
+
+@app.errorhandler(404)
+def non_existent(e):
+        return jsonify({"error": "The route is miss configured or misspelled, please see the CEA website for details"})
 
 def get_all_usernames():
     usernames_list = db.session.query(user_info.username).all()

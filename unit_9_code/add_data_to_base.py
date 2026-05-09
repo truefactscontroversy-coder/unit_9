@@ -25,7 +25,8 @@ def import_csv_to_db(file_path):
 
             db.session.commit()
 
-import_csv_to_db(r"C:\Users\ajlxs\OneDrive\Documents\weather_data_files\weather_dataVertwall.csv")
+#import_csv_to_db(r"C:\Users\ajlxs\OneDrive\Documents\weather_data_files\weather_dataVertwall.csv")
+#import_csv_to_db(r"C:\Users\ajlxs\OneDrive\Documents\weather_data_files\weather_dataZord.csv")
         
 keys = []
 def add_admin_key():
@@ -38,9 +39,5 @@ def add_admin_key():
 
 
 
-def get_api_keys():
-    with app.app_context():
-        api_keys = db.session.query(user_info.api_key).all()
-        return print(api_keys)
 
-get_api_keys()
+
