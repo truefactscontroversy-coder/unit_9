@@ -5,6 +5,7 @@ from marshmallow import fields
 import os
 import secrets
 from flask import session
+from sqlalchemy.orm import declarative_base, Session
 
 app = Flask(__name__)
 
@@ -67,13 +68,13 @@ username_schemas = user_infoSchema(many=True)
 
 class admin_key(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    admin_key = db.Column(db.String(100), unique=True)
+    key_for_admin = db.Column(db.String(100), unique=True)
 
-    def __init__(self, admin_key):
-        self.admin_key = admin_key
+    def __init__(self, key_for_admin):
+        self.key_for_admin = key_for_admin
 
 class admin_keySchema(ma.Schema):
-    admin_key = fields.Str()
+    key_for_admin = fields.Str()
 
 admin_key_schema = admin_keySchema()
 admin_key_schemas = admin_keySchema(many=True)
@@ -86,6 +87,55 @@ def get_weather_data():
     result = weather_data_schemas.dump(all_weather_data)
     return jsonify(result)
 
+@app.route('/get_all_one_location/', methods=['GET'])
+def get_all_one_location():
+    area = request.args.get('area')
+    location_data = weather_data.query.filter_by(area=area).all()
+    result = weather_data_schemas.dump(location_data)
+    return jsonify(result)
+
+    
+@app.route('/get_all_one_date/', methods=['GET'])
+def get_all_one_date():
+    date = request.args.get('date')
+    date_data = weather_data.query.filter_by(date=date).all()
+    result = weather_data_schemas.dump(date_data)
+    return jsonify(result)
+
+@app.route('/get_one_day_data/', methods=['GET'])
+def get_one_day_data():
+    date = request.args.get('date')
+    area = request.args.get('area')
+    day_data = weather_data.query.filter_by(date=date, area=area).first()
+    result = weather_data_schema.dump(day_data)
+    return jsonify(result)
+
+@app.errorhandler(404)
+def non_existent():
+    return jsonify({"error": "the record you tried to query does not exist"})
+
+
+
+def check_auth(func):
+    def wrapper(*args,**kwargs):
+        api_key = request.headers.get("x-api-key")
+        if not api_key:
+            return jsonify({"error": "API key missing"}), 401
+        return func(*args, **kwargs)
+    
+
+    
+    wrapper.__name__ = func.__name__  
+    return wrapper
+
+
+
+@app.route('/test', methods=['GET'])
+@check_auth
+def test():
+    all_weather_data = weather_data.query.all()
+    result = weather_data_schemas.dump(all_weather_data)
+    return jsonify(result)
 
 def get_all_usernames():
     usernames_list = db.session.query(user_info.username).all()
@@ -156,7 +206,11 @@ def get_key():
         "api_key": users_key.api_key
     })
     
-
+@app.route('/get_admin_keys', methods=['GET'])
+def get_admin_keys():
+    admin_keys = admin_key.query.all()
+    result = admin_key_schemas.dump(admin_keys)
+    return jsonify(result)
 
 
 @app.route('/account_page.html')

@@ -1,7 +1,9 @@
 import csv
-
+import secrets
 from app import app
 from app import app, db, weather_data
+from app import app, db, admin_key
+from app import app, db, user_info
 
 
 def import_csv_to_db(file_path):
@@ -22,8 +24,23 @@ def import_csv_to_db(file_path):
                 db.session.add(data)
 
             db.session.commit()
+
+import_csv_to_db(r"C:\Users\ajlxs\OneDrive\Documents\weather_data_files\weather_dataVertwall.csv")
+        
+keys = []
+def add_admin_key():
+    with app.app_context():
+        key = secrets.token_urlsafe(32)
+        db.session.add(admin_key(key))
+        db.session.commit()
+        print(f"key {key}")
         
 
-import_csv_to_db('C:\\Users\\ajlxs\\OneDrive\\Documents\\Unit_9\\unit_9\\unit_9_code\\9_weather_data(Sheet1).csv')
 
 
+def get_api_keys():
+    with app.app_context():
+        api_keys = db.session.query(user_info.api_key).all()
+        return print(api_keys)
+
+get_api_keys()
