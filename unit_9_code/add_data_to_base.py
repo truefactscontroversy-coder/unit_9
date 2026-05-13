@@ -4,6 +4,7 @@ from app import app
 from app import app, db, weather_data
 from app import app, db, admin_key
 from app import app, db, user_info
+from datetime import datetime
 
 
 def import_csv_to_db(file_path):
@@ -13,6 +14,7 @@ def import_csv_to_db(file_path):
 
             for row in reader:
                 data = weather_data(
+                    id=row['id'],
                     area=row['area'],
                     date=row['date'],
                     am1=float(row['am1']),
@@ -25,10 +27,10 @@ def import_csv_to_db(file_path):
 
             db.session.commit()
 
-#import_csv_to_db(r"C:\Users\ajlxs\OneDrive\Documents\weather_data_files\weather_dataVertwall.csv")
-#import_csv_to_db(r"C:\Users\ajlxs\OneDrive\Documents\weather_data_files\weather_dataZord.csv")
+#import_csv_to_db(r"C:\Users\ajlxs\OneDrive\Documents\weather_data_files\weather_data.csv")
+
         
-keys = []
+"""keys = []
 def add_admin_key():
     with app.app_context():
         key = secrets.token_urlsafe(32)
@@ -36,7 +38,10 @@ def add_admin_key():
         db.session.commit()
         print(f"key {key}")
         
+for i in range(5):
+    add_admin_key()
 
+print("done")"""
 
 
 

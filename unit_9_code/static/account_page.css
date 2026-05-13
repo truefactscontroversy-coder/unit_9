@@ -1,13 +1,13 @@
 body{
     background-color: #34495F;
 }
-#nav_title{
+/*#nav_title{
     display: flex;
-}
+}*/
 h1{
     color: #CBC9CE;
     text-align: center;
-    margin-left: 23%;
+    margin-left: 20%;
 
     
     
@@ -21,8 +21,9 @@ h1{
     padding-bottom: 2%;
     padding-left: 2%;
     padding-top: 2%;
-    padding-right: 3%;
-    margin-left: 35%;
+    padding-right: 8%;
+    margin-top: 1%;
+    margin-left: 10%;
     flex-wrap: nowrap;
 }
 #api_key{
@@ -45,10 +46,10 @@ h1{
     background-color: #A9A9A9;
     color: white;
 }
-#text_container{
+#qurey_and_key_container{
     display: flex;
-    flex-direction: row;
-    align-items: flex-end;
+    flex-direction: column-reverse;
+    align-items: top;
     padding: 0 5%;
 }
 #locations{
@@ -58,8 +59,9 @@ h1{
     border-width: 5px;
     width: fit-content;
     font-size: 1.35rem;
-    margin-left: 5%;
-    
+    margin-top: 1%;
+    margin-left: 10%;
+    align-content: start;
     padding: 1%;
     
 
@@ -71,7 +73,10 @@ h1{
     border-width: 5px;
     width: fit-content;
     font-size: 1.35rem;
-    margin-left: 5%;
+    margin-left: 10%;
+    margin-right: 1%;
+    margin-top: 15%;
+    margin-bottom: 20%;
     padding: 1%;
     
     
@@ -79,6 +84,41 @@ h1{
 a{
     color: #CBC9CE;
     font-size: 1.5rem;
-    margin-left: 3%;
-    margin-top: 1%;
+    margin-left: 1%;
+    margin-top: 3%;
+}
+#your_key{
+    flex-direction: column;
+}
+#all_content{
+    flex-direction: row;
+    display: flex;
+}
+#date_form{
+    color: #CBC9CE;
+    font-size: 1.35rem;
+    margin-left: 10%;
+    margin-top: 3%;
+    border-color: #CFB09B;
+    border-style: solid;
+    border-width: 5px;
+    width: fit-content;
+    padding: 1%;
+}
+p {
+    border-color: #CFB09B;
+    border-style: solid;
+    border-width: 5px;
+    width: fit-content;
+    text-align: center;
+    color: #CBC9CE;
+    font-size: 1.35rem;
+    padding: 1%;
+
+}
+#how_to_container{
+    margin-top: 10%;
+    place-items: center;
+    
+      
 }

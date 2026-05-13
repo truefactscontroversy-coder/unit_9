@@ -7,15 +7,13 @@
     <title>Document</title>
 </head>
 <body>
-    <div id="nav_title">
+    <nav>
         <a href="{{ url_for('index') }}">Back to Home</a>
-        <h1>Your API key</h1>
-    </div>
-        <div id="content_container">
-            <h2 id="api_key">{{ api_key }}</h2>
-            <button id="copy_button" onclick="copyApiKey()">Copy</button>
-        </div>
-        <div id="text_container">
+        <a href="{{url_for('how_to_page')}}">How to query data</a>
+    </nav>
+    <p id="date_form">Date format: YYYYMMDD </p>
+    <div id="all_content">
+        
         <p id="locations">
             Possible locations to query: 
             <br/>
@@ -55,17 +53,27 @@
             <br/>
             Vertwall
         </p>
-        <p id="queries">
-            Possible queries:
-            <br/>
-            Rainfall for a specified day (all locations). 
-            <br/>
-            Rainfall for a single specified location (all days). 
-            <br/>
-            Rainfall for a specified day for a single specified location .
-            <br/> 
-            Rainfall for all days, for all locations.
-        </p>
+        <div id="qurey_and_key_container">
+            <p id="queries">
+                Possible queries:
+                <br/>
+                Rainfall for a specified day (all locations). 
+                <br/>
+                Rainfall for a single specified location (all days). 
+                <br/>
+                Rainfall for a specified day for a single specified location .
+                <br/> 
+                Rainfall for all days, for all locations.
+            </p>
+            <div id="your_key">
+                <h1>Your API key</h1>
+            
+                <div id="content_container">
+                    <h2 id="api_key">{{ api_key }}</h2>
+                    <button id="copy_button" onclick="copyApiKey()">Copy</button>
+                </div>
+            </div>
+        </div>
     </div>
 <script src="{{ url_for('static', filename='java_account_page.js') }}"></script>
 </body>

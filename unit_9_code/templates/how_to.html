@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='account_page.css') }}">
+    <title>Document</title>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('account_page')}}">Back to account page</a>
+    </nav>
+    <div id="how_to_container">
+        <p>API end route: http://127.0.0.1:5000/Get_weather_data</p>
+        <p>
+            How to make a query: 
+            <br/>
+            First: Copy the route above and paste it to your API website 
+            <br/>
+            Next: copy your  API key and pass it in the headers as an “x-api-key”
+            <br/>
+            Finally: you can either chose to pass an argument for a specific area or date or you can just send the request to query all data 
+        </p>
+        <p>
+            Example area query: http://127.0.0.1:5000/Get_weather_data/?area=Zord
+            <br/>
+            This will query all data from the area Zord, if you want to query by date simply replace “area” with “date” and “Zord” with you desired date (example: “20260123”)
+        </p>
+    </div>
+</body>
+</html>
