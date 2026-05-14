@@ -3,11 +3,14 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from marshmallow import fields
 import os
+import re
 import secrets
 from flask import session
 from sqlalchemy.orm import declarative_base, Session
 import logging
 from datetime import datetime
+from markupsafe import escape
+
 
 
 app = Flask(__name__)
@@ -25,10 +28,10 @@ class weather_data(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     area = db.Column(db.String(100))
     date = db.Column(db.String(100))
-    am1 = db.Column(db.Float)
-    am2 = db.Column(db.Float)
-    pm1 = db.Column(db.Float)
-    pm2 = db.Column(db.Float)
+    am1 = db.Column(db.Float(100))
+    am2 = db.Column(db.Float(100))
+    pm1 = db.Column(db.Float(100))
+    pm2 = db.Column(db.Float(100))
 
     def __init__(self, id, area, date, am1, am2, pm1, pm2):
         self.id = id
@@ -43,13 +46,13 @@ class weather_data(db.Model):
 class weather_dataSchema(ma.Schema):
     class Meta:
         ordered = True
-    id = fields.Int()
-    area = fields.Str()
-    date = fields.Str()
-    am1 = fields.Float()
-    am2 = fields.Float()   
-    pm1 = fields.Float()
-    pm2 = fields.Float()
+    id = fields.Int(required=True)
+    area = fields.Str(required=True)
+    date = fields.Str(required=True)
+    am1 = fields.Float(required=True)
+    am2 = fields.Float(required=True)   
+    pm1 = fields.Float(required=True)
+    pm2 = fields.Float(required=True)
 
 weather_data_schema = weather_dataSchema()
 weather_data_schemas = weather_dataSchema(many=True)
@@ -146,10 +149,13 @@ def check_auth(func):
 @app.route('/Get_weather_data/', methods=['GET'])
 @check_auth
 def Get_weather_data():
-    #get_user_log()
+    get_user_log()
     
+
     date = request.args.get('date')
     area = request.args.get('area') 
+
+
         
     if (date and area):
         day_data = weather_data.query.filter_by(date=date, area=area).first()
@@ -159,6 +165,11 @@ def Get_weather_data():
         else:
             return jsonify(result)
     elif (date):
+        try:
+            date = datetime.strptime(date, "%Y%m%d")
+        except ValueError as e:
+            return jsonify({"error": "invalid format"}), 400
+        date = date.strftime("%Y%m%d")
         date_data = weather_data.query.filter_by(date=date).all()
         result = weather_data_schemas.dump(date_data)
         if not result:
@@ -206,9 +217,12 @@ def index():
 def register_page():
     return render_template('register.html')
 
-@app.route('/register_page', methods=['GET','POST'])
+@app.route('/register_page', methods=['POST'])
 def register():
+
+
     username_from_form = request.form.get('username')
+    username_from_form = escape(username_from_form)
     username_list = get_all_usernames()
     unpack_user_list = []
     for i in username_list:
@@ -344,19 +358,26 @@ def edit_data():
         for i in ids:
             i_d = list(i)
             i_ds.extend(i_d)
-    
-        id = request.json['id']
+        
+        id = (request.json['id'])
 
         if (id in i_ds):
             return jsonify({"error": "duplicate id",
                             "next step": "resubmit with a different id"}), 400
-        else:
-            area = request.json['area']
-            date = request.json['date']
-            am1 = request.json['am1']
-            am2 = request.json['am2']
-            pm1 = request.json['pm1']
-            pm2 = request.json['pm2']
+        date = request.json['date']
+        area = escape(request.json['area'])
+        try:
+            date = datetime.strptime(date, "%Y%m%d")
+        except ValueError as e:
+            return jsonify({"error": "invalid format"}), 400
+        
+        date = date.strftime("%Y%m%d")
+
+
+        am1 = request.json['am1']
+        am2 = request.json['am2']
+        pm1 = request.json['pm1']
+        pm2 = request.json['pm2']
             
             
         new_weather_data = weather_data(id, area, date, am1, am2, pm1, pm2)
@@ -399,15 +420,18 @@ def edit_data():
         if not day_data:
             return jsonify({"error": "the record you tried to update does not exist"})
         else:
-            id = request.json['id']
-            area = request.json['area']
+            area = escape(request.json['area'])
             date = request.json['date']
+            try:
+                date = datetime.strptime(date, "%Y%m%d")
+            except ValueError as e:
+                return jsonify({"error": "invalid format"}), 400
+            date = date.strftime("%Y%m%d")
             am1 = request.json['am1']
             am2 = request.json['am2']
             pm1 = request.json['pm1']
             pm2 = request.json['pm2']
             
-            day_data.id = id
             day_data.area = area
             day_data.date = date
             day_data.am1 = am1
@@ -426,7 +450,7 @@ def edit_data():
 
 @app.errorhandler(400)
 def invalid_request(e):
-    return jsonify({"error": "your post request is invalid"})
+    return jsonify({"error": "your request is invalid"})
 
 
 @app.route('/account_page.html')
@@ -446,9 +470,12 @@ def account_page():
 def login_page():
     return render_template('login.html')
 
-@app.route('/login_page', methods=['GET','POST'])
+@app.route('/login_page', methods=['POST'])
 def login():
     username_from_form = request.form.get('username')
+
+    
+
     username_list = get_all_usernames()
     unpack_user_list = []
     for i in username_list:
@@ -469,6 +496,8 @@ def login():
 @app.route('/how_to.html')
 def how_to_page():
     return render_template('/how_to.html')
+
+
 
 
 
