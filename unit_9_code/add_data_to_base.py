@@ -27,10 +27,10 @@ def import_csv_to_db(file_path):
 
             db.session.commit()
 
-import_csv_to_db(r"C:\Users\ajlxs\OneDrive\Documents\weather_data_files\weather_data.csv")
+#import_csv_to_db(r"C:\Users\ajlxs\OneDrive\Documents\weather_data_files\weather_data.csv")
 
         
-keys = []
+"""keys = []
 def add_admin_key():
     with app.app_context():
         key = secrets.token_urlsafe(32)
@@ -41,7 +41,7 @@ def add_admin_key():
 for i in range(5):
     add_admin_key()
 
-print("done")
+print("done")"""
 
 
 

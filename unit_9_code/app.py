@@ -91,7 +91,7 @@ class user_logs(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     method_request = db.Column(db.String(100))
     remote_access_ip = db.Column(db.String(100))
-    user_agent_str = db.Column(db.String(100))
+    user_agent_str = db.Column(db.String(100))  
     user_log_date_time = db.Column(db.String(100))
 
 
@@ -135,7 +135,7 @@ def check_auth(func):
         api_keys = db.session.query(user_info.api_key).all()
 
         if not any(api_key in key_list for key_list in api_keys):
-            return jsonify({"error": "invalid key, please enter a new key or go to the CEA website to get one"})
+            return jsonify({"error": "invalid key, please enter a new key or go to the CEA website to get one"}), 401
 
 
         return func(*args, **kwargs)
@@ -288,7 +288,7 @@ def check_auth_admin(func):
         api_keys = db.session.query(admin_key.key_for_admin).all()
 
         if not any(api_key in key_list for key_list in api_keys):
-            return jsonify({"error": "invalid key, please contact the CEA for a valid admin key"})
+            return jsonify({"error": "invalid key, please contact the CEA for a valid admin key"}), 401
 
 
         return func(*args, **kwargs)
